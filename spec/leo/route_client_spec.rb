@@ -1,4 +1,3 @@
-
 RSpec.describe Leo::RouteClient do
   subject { Leo::RouteClient }
 
@@ -20,9 +19,9 @@ RSpec.describe Leo::RouteClient do
     let(:source) { 'sentinels' }
 
     before do
-      stub_request(:get, route_url(source)).
-          with(headers: { 'Accept' => '*/*' }).
-          to_return(status: 200, body: '', headers: {})
+      stub_request(:get, route_url(source))
+        .with(headers: { 'Accept' => '*/*' })
+        .to_return(status: 200, body: '', headers: {})
       @response = subject.get_routes(source)
     end
 
@@ -42,19 +41,18 @@ RSpec.describe Leo::RouteClient do
   describe '.post_route' do
     before do
       @payload = {
-          source: :sentinels,
-          start_node: :alpha,
-          end_node: :beta,
-          start_time: Time.now.utc,
-          end_time: Time.now.utc,
-          passphrase: Leo.passphrase
+        source: :sentinels,
+        start_node: :alpha,
+        end_node: :beta,
+        start_time: Time.now.utc,
+        end_time: Time.now.utc,
+        passphrase: Leo.passphrase
       }
 
       stub_post_route(request_body: @payload.to_json)
     end
 
     context 'when the payload argument is JSON string' do
-
       before do
         @response = subject.post_route(@payload.to_json)
       end
@@ -102,7 +100,7 @@ RSpec.describe Leo::RouteClient do
     context 'when the source argument is NOT nil' do
       it 'produces the path' do
         source = 'sentinels'
-        path = '/the_one/routes?source=%s' % source
+        path = format('/the_one/routes?source=%<source>s', source: source)
         expect(subject.routes_path(source)).to eql(path)
       end
     end

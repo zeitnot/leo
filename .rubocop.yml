@@ -1,0 +1,19 @@
+AllCops:
+  Exclude:
+    - spec/**/*.rb
+    - leo.gemspec
+Documentation:
+  Enabled: true
+
+ClassAndModuleChildren:
+  EnforcedStyle: nested
+  SupportedStyles:
+    - nested
+    - compact
+
+MethodLength:
+  CountComments: false  # count full line comments?
+  Max: 16
+
+LineLength:
+  Max: 120

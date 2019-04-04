@@ -1,3 +1,10 @@
+require 'simplecov'
+SimpleCov.start do
+  add_filter '/spec/'
+  track_files 'lib/**/*.rb'
+  coverage_dir 'log/coverage'
+end
+
 require 'bundler/setup'
 require 'leo'
 require 'webmock/rspec'

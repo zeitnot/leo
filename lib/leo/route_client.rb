@@ -5,9 +5,9 @@ module Leo
   # to download zip files and to post routes.
   class RouteClient
     class << self
-
       # Downloads zip file from <code>/the_one/routes</code> path.
-      # @param [String] source This value would be <code>sentinels</code>, <code>sniffers</code> and <code>loopholes</code>
+      # @param [String] source This value would be <code>sentinels</code>,
+      #   <code>sniffers</code> and <code>loopholes</code>
       # @return [Faraday::Response]
       def get_routes(source)
         connection.get do |request|
@@ -26,6 +26,7 @@ module Leo
           request.headers['Content-Type'] = 'application/json'
         end
       end
+
       # Creates a Faraday connection instance for <code>challenge.distribusion.com</code>.
       # @return [Faraday::Connection]
       def connection
@@ -40,12 +41,11 @@ module Leo
       #   Leo::RouteClient.routes_path('sentinels') => '/the_one/routes?source=sentinels'
       # @param [String] source
       # @return [String]
-      def routes_path(source=nil)
+      def routes_path(source = nil)
         path = '/the_one/routes'
         path << '?source=' << source if source
         path
       end
-
     end
   end
 end
