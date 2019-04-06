@@ -19,32 +19,25 @@ module Leo # :nodoc:
 
       # :reek:FeatureEnvy
       def generate_routes
-        output = []
-        array = from_csv_to_array
-        array.each_with_index do |item, seq|
+        routes_array = parse_routes
+        routes_array.map.with_index do |item, seq|
           _, node, index, time = item
           index = index.to_i
           next if index == 2
 
-          next_item = array[seq + 1]
-          output << {
+          next_item = routes_array[seq + 1]
+          {
             start_node: node.delete(' '),
             end_node: next_item[1].delete(' '),
             start_time: Util.format_time(time),
             end_time: Util.format_time(next_item[3])
           }
-        end
-        output
+        end.compact
       end
 
-      def from_csv_to_array
-        data = File.read(source.source_path + 'routes.csv')
-        data.delete!('"')
-        array = CSV.parse(data, col_sep: ',')
-
-        # Remove headers
-        # Remove Zeta
-        array[1..-2]
+      def parse_routes
+        array = Util.parse_csv_file(source.source_path + 'routes.csv')
+        array[0..-2] # Remove Zeta
       end
     end
   end
