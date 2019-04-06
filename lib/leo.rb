@@ -9,6 +9,7 @@ require 'leo/route_client'
 require 'leo/source'
 require 'leo/parser'
 require 'leo/parsers/sentinels'
+require 'leo/parsers/sniffers'
 
 module Leo # :nodoc:
   SOURCES = %i[sentinels sniffers loopholes].freeze

@@ -5,6 +5,9 @@ AllCops:
 Documentation:
   Enabled: true
 
+Metrics/AbcSize:
+  Max: 17
+
 ClassAndModuleChildren:
   EnforcedStyle: nested
   SupportedStyles:

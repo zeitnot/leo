@@ -40,8 +40,8 @@ module Leo # :nodoc:
           output << {
             start_node: node.delete(' '),
             end_node: next_item[1].delete(' '),
-            start_time: Util.convert_time_to_utc(time),
-            end_time: Util.convert_time_to_utc(next_item[3])
+            start_time: Util.format_time(time),
+            end_time: Util.format_time(next_item[3])
           }
         end
         output
