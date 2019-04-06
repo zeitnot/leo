@@ -1,17 +1,17 @@
-require 'faraday'
+# frozen_string_literal: true
 
-module Leo
+module Leo # :nodoc:
   # <code>RouteClient</code> executes request against <code>challenge.distribusion.com</code> and allows a client both
   # to download zip files and to post routes.
   class RouteClient
     class << self
       # Downloads zip file from <code>/the_one/routes</code> path.
-      # @param [String] source This value would be <code>sentinels</code>,
+      # @param [String,Symbol] source This value would be <code>sentinels</code>,
       #   <code>sniffers</code> and <code>loopholes</code>
       # @return [Faraday::Response]
       def get_routes(source)
         connection.get do |request|
-          request.url routes_path(source)
+          request.url routes_path(source.to_s)
         end
       end
 
@@ -43,7 +43,7 @@ module Leo
       # @return [String]
       def routes_path(source = nil)
         path = '/the_one/routes'
-        path << '?source=' << source if source
+        path += '?' + URI.encode_www_form(source: source, passphrase: Leo.passphrase) if source
         path
       end
     end

@@ -100,7 +100,10 @@ RSpec.describe Leo::RouteClient do
     context 'when the source argument is NOT nil' do
       it 'produces the path' do
         source = 'sentinels'
-        path = format('/the_one/routes?source=%<source>s', source: source)
+        passpharase = CGI.escape(Leo.passphrase)
+        path = format('/the_one/routes?source=%<source>s&passphrase=%<pass>s',
+                      source: source, pass: passpharase
+        )
         expect(subject.routes_path(source)).to eql(path)
       end
     end
