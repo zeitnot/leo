@@ -41,6 +41,12 @@ module Leo # :nodoc:
         array[1..-1] # Remove headers
       end
 
+      # @param [Pathname] file
+      # @return [Hash]
+      def parse_json_file(file)
+        JSON.parse(File.read(file))
+      end
+
       # Removes download directory recursively.
       # @return [void]
       def remove_download_dir

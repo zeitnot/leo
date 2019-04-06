@@ -30,6 +30,15 @@ module Helpers
       { start_node: 'psi',    end_node: 'omega',  start_time: '2030-12-31T13:00:07', end_time: '2030-12-31T13:00:08' }
     ]
   end
+
+  def loopholes_routes
+    [
+      { start_node: 'gamma',  end_node: 'theta',  start_time: '2030-12-31T13:00:04', end_time: '2030-12-31T13:00:05' },
+      { start_node: 'theta',  end_node: 'lambda', start_time: '2030-12-31T13:00:05', end_time: '2030-12-31T13:00:06' },
+      { start_node: 'beta',   end_node: 'theta',  start_time: '2030-12-31T13:00:05', end_time: '2030-12-31T13:00:06' },
+      { start_node: 'theta',  end_node: 'lambda', start_time: '2030-12-31T13:00:06', end_time: '2030-12-31T13:00:07' }
+    ]
+  end
 end
 
 RSpec.configure do |config|

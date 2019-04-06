@@ -10,6 +10,7 @@ require 'leo/source'
 require 'leo/parser'
 require 'leo/parsers/sentinels'
 require 'leo/parsers/sniffers'
+require 'leo/parsers/loopholes'
 
 module Leo # :nodoc:
   SOURCES = %i[sentinels sniffers loopholes].freeze
