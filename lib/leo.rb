@@ -7,6 +7,8 @@ require 'faraday'
 require 'leo/util'
 require 'leo/route_client'
 require 'leo/source'
+require 'leo/parser'
+require 'leo/parsers/sentinels'
 
 module Leo # :nodoc:
   SOURCES = %i[sentinels sniffers loopholes].freeze

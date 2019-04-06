@@ -4,12 +4,6 @@ module Leo # :nodoc:
   # Utility Functions
   module Util
     class << self
-      # Removes download directory recursively.
-      # @return [void]
-      def remove_download_dir
-        FileUtils.rm_rf(Leo.download_path)
-      end
-
       # Creates download directory if the directory does not exist.
       # @return [void]
       def create_download_dir
@@ -26,6 +20,21 @@ module Leo # :nodoc:
         else
           create_download_dir
         end
+      end
+
+      # Converts the time into UTC format
+      # @param [String] time
+      # @example
+      #   Leo::Util.convert_time_to_iso8601('2030-12-31T22:00:01+09:00') #=> '2030-12-31T13:00:01'
+      # @return [String]
+      def convert_time_to_utc(time)
+        DateTime.iso8601(time).to_time.utc.strftime('%Y-%m-%dT%H:%M:%S')
+      end
+
+      # Removes download directory recursively.
+      # @return [void]
+      def remove_download_dir
+        FileUtils.rm_rf(Leo.download_path)
       end
     end
   end

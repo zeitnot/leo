@@ -4,7 +4,7 @@ module Leo #:nodoc:
   # This class is an implementation for sources such as <th>sentinels</th> or <th>sniffers</th>
   # This class is responsible for downloading source resource, extracts it and generates available routes.
   # @example
-  #   Leo::Source.new(:sentinels).routes => [
+  #   Leo::Source.new(:sentinels).routes #=> [
   #     {
   #         start_node: "alpha",
   #         end_node: "beta",
@@ -74,14 +74,8 @@ module Leo #:nodoc:
       zip_name.file? && Time.now - zip_name.mtime < Leo.cache_lifetime
     end
 
-    # TODO: Implement route generator.
     def generate_routes
-      [{
-          start_node: 'alpha',
-          end_node: 'beta',
-          start_time: '2030-12-31T13:00:01',
-          end_time: '2030-12-31T13:00:02'
-       }]
+      Parser.new(self).routes
     end
   end
 end

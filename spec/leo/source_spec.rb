@@ -82,4 +82,16 @@ RSpec.describe Leo::Source do
       end
     end
   end
+
+  describe '#routes' do
+    it 'returns routes as array' do
+      source = 'sentinels'
+      zip_data        = File.read(Pathname.new("spec/data/#{source}.zip"), mode: 'rb')
+      mock_response   = double(Faraday::Response, body: zip_data)
+      allow(Leo::RouteClient).to receive(:get_routes).and_return(mock_response)
+
+      source_object = subject.new source
+      expect(source_object.routes).to eql(sentinels_routes)
+    end
+  end
 end
