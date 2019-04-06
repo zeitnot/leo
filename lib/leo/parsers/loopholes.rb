@@ -14,17 +14,7 @@ module Leo # :nodoc:
     #         end_time: "2030-12-31T13:00:02"
     #     }
     #   ]
-    class Loopholes
-      attr_reader :source
-      # @param [Leo::Source] source Source object
-      def initialize(source)
-        @source = source
-      end
-
-      def routes
-        @routes ||= generate_routes
-      end
-
+    class Loopholes < Base
       private
 
       attr_accessor :node_pairs, :json_routes

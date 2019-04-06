@@ -15,17 +15,7 @@ module Leo # :nodoc:
     #         end_time: "2030-12-31T13:00:02"
     #     }
     #   ]
-    class Sniffers
-      attr_reader :source
-      # @param [Leo::Source] source Source object
-      def initialize(source)
-        @source = source
-      end
-
-      def routes
-        @routes ||= generate_routes
-      end
-
+    class Sniffers < Base
       private
 
       attr_accessor :node_times, :sequences, :csv_routes
