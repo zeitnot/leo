@@ -2,6 +2,9 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/105e973fa36d7d032acf/maintainability)](https://codeclimate.com/github/zeitnot/leo/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/105e973fa36d7d032acf/test_coverage)](https://codeclimate.com/github/zeitnot/leo/test_coverage)
 
+### Requirements
+ruby `>= 2.3`
+
 ### Installation
 * `$ git clone git@github.com:zeitnot/leo.git`
 * `$ bundle install`
