@@ -13,8 +13,18 @@ module Leo #:nodoc:
   #     }
   #   ]
   class Source
+    VALID_SOURCE_TYPES = [Symbol, String].freeze
+
     attr_reader :download_path, :source, :source_path, :zip_name
+
     def initialize(source)
+      unless VALID_SOURCE_TYPES.member?(source.class)
+        raise InvalidSourceTypeError, 'Given source type is invalid. Available sources types are ' \
+                                      "#{VALID_SOURCE_TYPES.join(',')}"
+      end
+
+      raise SourceNotAvailableError, "'#{source}' is not available." if Leo::SOURCES.none?(source.to_sym)
+
       @download_path = Leo.download_path
       @source        = source.to_s
       @source_path   = @download_path + @source

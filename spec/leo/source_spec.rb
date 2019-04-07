@@ -7,6 +7,26 @@ RSpec.describe Leo::Source do
     Leo::Util.clear_download_dir
   end
 
+  describe '#initialize' do
+    context 'when source type is invalid' do
+      it 'raises InvalidSourceTypeError' do
+        expect{ subject.new([]) }.to raise_error(Leo::InvalidSourceTypeError)
+      end
+    end
+
+    context 'when source is not available' do
+      it 'raises SourceNotAvailableError' do
+        expect{ subject.new('source not available') }.to raise_error(Leo::SourceNotAvailableError)
+      end
+    end
+
+    context 'when source is Symbol' do
+      it 'converts source to String' do
+        expect(subject.new(:sentinels).source).to eql('sentinels')
+      end
+    end
+  end
+
   describe '#download' do
     context 'when from_cache? returns false' do
       Leo::SOURCES.each do |source|

@@ -7,4 +7,10 @@ module Leo
 
   class MethodNotImplementedError < LeoError
   end
+
+  class SourceNotAvailableError < LeoError
+  end
+
+  class InvalidSourceTypeError < LeoError
+  end
 end

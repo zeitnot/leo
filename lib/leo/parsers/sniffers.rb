@@ -20,7 +20,6 @@ module Leo # :nodoc:
 
       attr_accessor :node_times, :sequences, :csv_routes
 
-
       def generate_routes
         parse_node_times
         parse_routes
