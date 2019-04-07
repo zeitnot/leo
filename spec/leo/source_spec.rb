@@ -104,14 +104,23 @@ RSpec.describe Leo::Source do
   end
 
   describe '#routes' do
-    Leo::SOURCES.each do |source|
-      it "returns routes as array for #{source}" do
-        zip_data        = File.read(Pathname.new("spec/data/#{source}.zip"), mode: 'rb')
-        mock_response   = double(Faraday::Response, body: zip_data)
-        allow(Leo::RouteClient).to receive(:get_routes).and_return(mock_response)
+    context 'when download method returns false' do
+      it 'returns empty hash' do
+        source_object = subject.new :sentinels
+        allow(source_object).to receive(:download).and_return(false)
+        expect(source_object.routes).to eql({})
+      end
+    end
+    context 'when download method retruns true' do
+      Leo::SOURCES.each do |source|
+        it "returns routes as array for #{source}" do
+          zip_data        = File.read(Pathname.new("spec/data/#{source}.zip"), mode: 'rb')
+          mock_response   = double(Faraday::Response, body: zip_data)
+          allow(Leo::RouteClient).to receive(:get_routes).and_return(mock_response)
 
-        source_object = subject.new source
-        expect(source_object.routes).to eql(send("#{source}_routes"))
+          source_object = subject.new source
+          expect(source_object.routes).to eql(send("#{source}_routes"))
+        end
       end
     end
   end

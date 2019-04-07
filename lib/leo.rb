@@ -5,15 +5,20 @@ require 'zip'
 require 'csv'
 require 'faraday'
 require 'logger'
+
 require 'leo/errors'
 require 'leo/util'
 require 'leo/route_client'
 require 'leo/source'
+
+# Parser classes
 require 'leo/parser'
 require 'leo/parsers/base'
 require 'leo/parsers/sentinels'
 require 'leo/parsers/sniffers'
 require 'leo/parsers/loopholes'
+
+# Managers
 require 'leo/post_manager'
 require 'leo/extract_manager'
 

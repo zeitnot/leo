@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Leo #:nodoc:
-  # This class is an implementation for sources such as <th>sentinels</th> or <th>sniffers</th>
+  # This class is an implementation for sources such as <tt>sentinels</tt> or <tt>sniffers</tt>
   # This class is responsible for downloading source resource, extracts it and generates available routes.
   # @example
   #   Leo::Source.new(:sentinels).routes #=> [
@@ -56,11 +56,12 @@ module Leo #:nodoc:
 
     def download
       if from_cache?
-        puts 'Reading from cache'
+        Leo.logger.info "Reading '#{source}' files from cache."
       else
         Util.create_download_dir # Create tmp/ dir  if does not exist.
         response = RouteClient.get_routes(source)
         return false unless response # it is nil in case of a connection error
+
         File.open(zip_name, 'wb') { |file| file.write(response.body) }
       end
       true
