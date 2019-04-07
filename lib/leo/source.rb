@@ -23,7 +23,7 @@ module Leo #:nodoc:
                                       "#{VALID_SOURCE_TYPES.join(',')}"
       end
 
-      raise SourceNotAvailableError, "'#{source}' is not available." if Leo::SOURCES.none?(source.to_sym)
+      raise SourceNotAvailableError, "'#{source}' is not available." unless Leo::SOURCES.member?(source.to_sym)
 
       @download_path = Leo.download_path
       @source        = source.to_s
