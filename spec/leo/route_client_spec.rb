@@ -108,4 +108,50 @@ RSpec.describe Leo::RouteClient do
       end
     end
   end
+
+  describe '.retry?' do
+    context 'when num_entries is greater than Leo.max_network_retries' do
+      it 'returns false' do
+        expect(subject.retry?(nil, Leo.max_network_retries + 1)).to be(false)
+      end
+    end
+
+    context 'when num_entries is NOT greater than Leo.max_network_retries' do
+      let(:num_retries) { Leo.max_network_retries - 1 }
+
+      context 'and when exception is Faraday::TimeoutError' do
+        it 'returns true' do
+          expect(subject.retry?(Faraday::TimeoutError.new(nil), num_retries)).to be(true)
+        end
+      end
+
+      context 'and when exception is Faraday::ConnectionFailed' do
+        it 'returns true' do
+          expect(subject.retry?(Faraday::ConnectionFailed.new(nil), num_retries)).to be(true)
+        end
+      end
+
+      context 'and when exception is Faraday::ClientError' do
+        context 'and response status code is 409' do
+          it 'returns true' do
+            exception = Faraday::ClientError.new(nil, { status: 409 })
+            expect(subject.retry?(exception, num_retries)).to be(true)
+          end
+        end
+
+        context 'and response status code is NOT 409' do
+          it 'returns false' do
+            exception = Faraday::ClientError.new(nil, { status: 401 })
+            expect(subject.retry?(exception, num_retries)).to be(false)
+          end
+        end
+      end
+
+      context 'and when exception is NOT kind of Faraday::ClientError' do
+        it 'returns false' do
+          expect(subject.retry?(StandardError.new, num_retries)).to be(false)
+        end
+      end
+    end
+  end
 end

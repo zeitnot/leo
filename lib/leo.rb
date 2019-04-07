@@ -23,11 +23,15 @@ module Leo # :nodoc:
 
   # Passwords or API Keys should be stored in environment variables.
   # But for this case study it is not important as much.
-  @passphrase     = 'Kans4s-i$-g01ng-by3-bye'
-  @route_base     = 'https://challenge.distribusion.com'
+  @passphrase           = 'Kans4s-i$-g01ng-by3-bye'
+  @route_base           = 'https://challenge.distribusion.com'
+  @max_network_retries  = 3
+  @open_timeout         = 10
+  @read_timeout         = 30
 
   class << self
-    attr_reader :route_base, :passphrase, :download_path, :cache_lifetime
+    attr_reader :route_base, :passphrase, :download_path, :cache_lifetime, :max_network_retries,
+                :open_timeout, :read_timeout
 
     # Lists routes for every resource.
     # @param [String, Symbol] source

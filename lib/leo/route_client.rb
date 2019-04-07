@@ -10,8 +10,10 @@ module Leo # :nodoc:
       #   <code>sniffers</code> and <code>loopholes</code>
       # @return [Faraday::Response]
       def get_routes(source)
-        connection.get do |request|
-          request.url routes_path(source.to_s)
+        with_rescue do
+          connection.get do |request|
+            request.url routes_path(source.to_s)
+          end
         end
       end
 
@@ -19,11 +21,13 @@ module Leo # :nodoc:
       # @param [String,Hash] payload The value would be a valid JSON string or a Hash.
       # @return [Faraday::Response]
       def post_route(payload)
-        payload = payload.to_json if payload.is_a?(Hash)
-        connection.post do |request|
-          request.url routes_path
-          request.body = payload
-          request.headers['Content-Type'] = 'application/json'
+        with_rescue do
+          payload = payload.to_json if payload.is_a?(Hash)
+          connection.post do |request|
+            request.url routes_path
+            request.body = payload
+            request.headers['Content-Type'] = 'application/json'
+          end
         end
       end
 
@@ -31,8 +35,11 @@ module Leo # :nodoc:
       # @return [Faraday::Connection]
       def connection
         @connection ||= Faraday.new(url: Leo.route_base) do |faraday|
-          faraday.request  :url_encoded
-          faraday.adapter  Faraday.default_adapter
+          faraday.options.timeout       = Leo.read_timeout
+          faraday.options.open_timeout  = Leo.open_timeout
+          faraday.use                     Faraday::Response::RaiseError
+          faraday.request                 :url_encoded
+          faraday.adapter                 Faraday.default_adapter
         end
       end
 
@@ -45,6 +52,37 @@ module Leo # :nodoc:
         path = '/the_one/routes'
         path += '?' + URI.encode_www_form(source: source, passphrase: Leo.passphrase) if source
         path
+      end
+
+      # Decides whether to retry the failed request or not.
+      def retry?(exception, num_retries)
+        return false if num_retries >= Leo.max_network_retries
+
+        # Retry on timeout-related problems (either on open or read).
+        return true if exception.is_a?(Faraday::TimeoutError)
+
+        # Destination refused the connection, the connection was reset, or a
+        # variety of other connection failures.
+        return true if exception.is_a?(Faraday::ConnectionFailed)
+
+        if exception.is_a?(Faraday::ClientError)
+          response = exception.response
+          # 409 conflict
+          return true if response && response[:status] == 409
+        end
+
+        false
+      end
+
+      def with_rescue
+        retry_count = 0
+        begin
+          yield
+        rescue StandardError => exception
+          retry_count += 1
+          retry if retry?(exception, retry_count)
+          raise unless exception.is_a?(Faraday::ClientError)
+        end
       end
     end
   end

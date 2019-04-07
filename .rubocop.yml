@@ -14,6 +14,9 @@ ClassAndModuleChildren:
     - nested
     - compact
 
+Naming/RescuedExceptionsVariableName:
+  PreferredName: exception
+
 MethodLength:
   CountComments: false  # count full line comments?
   Max: 16
