@@ -10,13 +10,13 @@ rvm:
 before_install: 'printf "y" | rvm @global do gem uninstall bundler; gem install bundler -v "~> 1.17.2"'
 notifications:
   email:
-on_success: never
+    on_success: never
 script:
-- bundle exec rake
+  - bundle exec rake
 
-env:
-  global:
-    - CC_TEST_REPORTER_ID=3f076d52756ee45e433c18a643cea7b6e0e4734b1f6c3d51b390c4ef7e1d803d
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter

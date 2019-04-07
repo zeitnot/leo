@@ -1,2 +1,3 @@
 [![Build Status](https://travis-ci.org/zeitnot/leo.svg?branch=master)](https://travis-ci.org/zeitnot/leo)
 [![Maintainability](https://api.codeclimate.com/v1/badges/105e973fa36d7d032acf/maintainability)](https://codeclimate.com/github/zeitnot/leo/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/105e973fa36d7d032acf/test_coverage)](https://codeclimate.com/github/zeitnot/leo/test_coverage)
