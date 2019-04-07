@@ -1,11 +1,11 @@
 module Helpers
-  def stub_post_route(request_body:, status: 200, response_body: '')
+  def stub_post_route(request_body:, request_headers: { 'Accept' => '*/*' }, status: 200, response_body: '', response_headers: {})
     stub_request(:post, route_url)
       .with(
         body: request_body,
-        headers: { 'Accept' => '*/*' }
+        headers: request_headers
       )
-      .to_return(status: status, body: response_body, headers: {})
+      .to_return(status: status, body: response_body, headers: response_headers)
   end
 
   def route_url(source = nil)

@@ -4,6 +4,7 @@ require 'leo/version'
 require 'zip'
 require 'csv'
 require 'faraday'
+require 'logger'
 require 'leo/errors'
 require 'leo/util'
 require 'leo/route_client'
@@ -13,6 +14,7 @@ require 'leo/parsers/base'
 require 'leo/parsers/sentinels'
 require 'leo/parsers/sniffers'
 require 'leo/parsers/loopholes'
+require 'leo/post_manager'
 
 module Leo # :nodoc:
   SOURCES = %i[sentinels sniffers loopholes].freeze
@@ -48,6 +50,10 @@ module Leo # :nodoc:
     # @return [Pathname] path
     def download_path=(path)
       @download_path = Pathname.new(path)
+    end
+
+    def logger
+      @logger ||= Logger.new(STDOUT)
     end
   end
 end
