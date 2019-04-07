@@ -25,5 +25,5 @@ task :checks do
   Rake::Task['spec'].invoke
   Rake::Task['rubocop'].invoke
   Rake::Task['reek'].invoke
-  `open log/coverage/index.html`
+  `open coverage/index.html`
 end

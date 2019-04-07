@@ -1,11 +1,15 @@
 require 'simplecov'
 require 'simplecov-console'
 
-SimpleCov.formatter = SimpleCov::Formatter::Console
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
+    SimpleCov::Formatter::HTMLFormatter,
+    SimpleCov::Formatter::Console,
+]
+
 SimpleCov.start do
   add_filter '/spec/'
   track_files 'lib/**/*.rb'
-  coverage_dir 'log/coverage'
+  coverage_dir 'coverage'
 end
 
 require 'bundler/setup'
