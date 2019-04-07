@@ -33,12 +33,18 @@ module Leo # :nodoc:
     attr_reader :route_base, :passphrase, :download_path, :cache_lifetime, :max_network_retries,
                 :open_timeout, :read_timeout
 
-    # Lists routes for every resource.
-    # @param [String, Symbol] source
-    # @raise Leo::InvalidSource
+    # Lists routes for every sources.
+    # @param [String, Symbol] sources
     # @return [Hash]
-    def list_routes(source = nil)
-      Source.new(source).routes
+    def list_routes(*sources)
+      PostManager.new(*sources).routes
+    end
+
+    # Post routes for every sources.
+    # @param [String, Symbol] sources
+    # @return [Hash]
+    def post_routes(*sources)
+      PostManager.new(*sources).post_routes
     end
 
     # Sets cache life time in seconds
