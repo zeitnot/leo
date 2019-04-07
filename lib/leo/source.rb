@@ -44,9 +44,12 @@ module Leo #:nodoc:
     #   ]
     # @return [Hash]
     def routes
-      download
-      extract
-      generate_routes
+      if download
+        extract
+        generate_routes
+      else
+        {}
+      end
     end
 
     private
@@ -57,6 +60,7 @@ module Leo #:nodoc:
       else
         Util.create_download_dir # Create tmp/ dir  if does not exist.
         response = RouteClient.get_routes(source)
+        return false unless response # it is nil in case of a connection error
         File.open(zip_name, 'wb') { |file| file.write(response.body) }
       end
       true

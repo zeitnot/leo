@@ -33,10 +33,10 @@ module Leo
         routes.each do |route|
           response = RouteClient.post_route(route.merge(source: source, passphrase: Leo.passphrase))
           log_string = "#{source}: #{route[:start_node]} -> #{route[:end_node]}"
-          if response.status == 201
+          if response&.status == 201
             Leo.logger.info "#{log_string} is uploaded."
           else
-            failed_routes[[source, route[:start_node], route[:end_node]]] ||= true
+            failed_routes[[source, route[:start_node], route[:end_node]]] ||= false
             Leo.logger.error "#{log_string} is not uploaded."
           end
         end
