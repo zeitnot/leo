@@ -67,21 +67,7 @@ module Leo #:nodoc:
     end
 
     def extract
-      # Remove extracted source dir recursively to fresh the data
-      FileUtils.rm_rf(source_path)
-      Zip::File.open(zip_name) { |zip_file| _extract(zip_file) }
-      true
-    end
-
-    # :reek:FeatureEnvy
-    def _extract(zip_file)
-      zip_file.each do |file|
-        file_name = file.name
-        next if file_name =~ /__MACOSX/i
-
-        path = File.join(download_path, file_name)
-        zip_file.extract(file, path)
-      end
+      ExtractManager.new(self).extract
     end
 
     def from_cache?

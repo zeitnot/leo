@@ -15,6 +15,7 @@ require 'leo/parsers/sentinels'
 require 'leo/parsers/sniffers'
 require 'leo/parsers/loopholes'
 require 'leo/post_manager'
+require 'leo/extract_manager'
 
 module Leo # :nodoc:
   SOURCES = %i[sentinels sniffers loopholes].freeze
