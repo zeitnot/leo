@@ -5,6 +5,7 @@ require 'zip'
 require 'csv'
 require 'faraday'
 require 'logger'
+require 'json'
 
 require 'leo/errors'
 require 'leo/util'
