@@ -60,7 +60,7 @@ module Leo # :nodoc:
     # @param [Integer, String] seconds
     # @return [Integer]
     def cache_lifetime=(seconds)
-      Integer(seconds)
+      @cache_lifetime = Integer(seconds)
     end
 
     # Sets download path

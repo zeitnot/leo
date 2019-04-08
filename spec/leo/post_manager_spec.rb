@@ -30,20 +30,35 @@ RSpec.describe  Leo::PostManager do
   end
 
   describe '#post_routes' do
-    it 'posts routes and returns empty hash' do
-      source = :sentinels
-      manager = subject.new(source)
-      stub_get_zip_data(source)
-      stub_post_routes(source)
-      expect(manager.post_routes).to eql({})
+    context 'when remote server returns 201 status code' do
+      it 'posts routes and returns empty hash' do
+        source = :sentinels
+        manager = subject.new(source)
+        stub_get_zip_data(source)
+        stub_post_routes(source)
+        expect(manager.post_routes).to eql({})
+      end
+    end
+
+    context 'when remote server returns other than 201 status code' do
+      it 'returns failed routes as hash' do
+        source = :sentinels
+        manager = subject.new(source)
+        stub_get_zip_data(source)
+        stub_post_routes(source, status: 400)
+        expect(manager.post_routes).to eql({ [:sentinels, 'alpha', 'beta']=>false,
+                                                      [:sentinels, 'beta', 'gamma']=>false,
+                                                      [:sentinels, 'delta', 'beta']=>false
+                                                    })
+      end
     end
   end
 
-  def stub_post_routes(source)
+  def stub_post_routes(source, status: 201)
     send("#{source}_routes").map do |route|
       stub_post_route(
         request_body: route.merge(source: source, passphrase: Leo::passphrase).to_json,
-        status: 201
+        status: status
       )
     end
   end

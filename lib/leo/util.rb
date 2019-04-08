@@ -46,12 +46,6 @@ module Leo # :nodoc:
       def parse_json_file(file)
         JSON.parse(File.read(file))
       end
-
-      # Removes download directory recursively.
-      # @return [void]
-      def remove_download_dir
-        FileUtils.rm_rf(Leo.download_path)
-      end
     end
   end
 end

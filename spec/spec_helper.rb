@@ -8,6 +8,8 @@ SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
 
 SimpleCov.start do
   add_filter '/spec/'
+  add_filter '/lib/leo/version.rb'
+  
   track_files 'lib/**/*.rb'
   coverage_dir 'coverage'
 end

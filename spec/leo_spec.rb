@@ -21,4 +21,16 @@ RSpec.describe Leo do
     allow_any_instance_of(Leo::PostManager).to receive(:post_routes).and_return({})
     expect(Leo.post_routes).to eql({})
   end
+
+  it 'has cache_lifetime= and returns integer' do
+    Leo.cache_lifetime = 4
+    expect(Leo.cache_lifetime).to be(4)
+  end
+
+  it 'has download_path= and return Pathname object' do
+    Leo.download_path = 'test'
+    download_path = Leo.download_path
+    expect(download_path).to be_kind_of(Pathname)
+    expect(download_path.to_s).to eql('test')
+  end
 end
