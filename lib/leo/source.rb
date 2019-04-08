@@ -42,13 +42,13 @@ module Leo #:nodoc:
     #         end_time: "2030-12-31T13:00:02"
     #     }
     #   ]
-    # @return [Hash]
+    # @return [Array] Array of hash
     def routes
       if download
         extract
         generate_routes
       else
-        {}
+        []
       end
     end
 

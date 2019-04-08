@@ -105,10 +105,10 @@ RSpec.describe Leo::Source do
 
   describe '#routes' do
     context 'when download method returns false' do
-      it 'returns empty hash' do
+      it 'returns empty array' do
         source_object = subject.new :sentinels
         allow(source_object).to receive(:download).and_return(false)
-        expect(source_object.routes).to eql({})
+        expect(source_object.routes).to eql([])
       end
     end
     context 'when download method retruns true' do
