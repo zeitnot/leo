@@ -8,7 +8,7 @@ module Leo # :nodoc:
       # Downloads zip file from <code>/the_one/routes</code> path.
       # @param [String,Symbol] source This value would be <code>sentinels</code>,
       #   <code>sniffers</code> and <code>loopholes</code>
-      # @return [Faraday::Response]
+      # @return [Faraday::Response, nil] Returns nil in case of connection problems
       def get_routes(source)
         with_rescue do
           connection.get do |request|
@@ -19,7 +19,7 @@ module Leo # :nodoc:
 
       # Posts a route to <code>/the_one/routes</code> path with given payload.
       # @param [String,Hash] payload The value would be a valid JSON string or a Hash.
-      # @return [Faraday::Response]
+      # @return [Faraday::Response, nil] Returns nil in case of connection problems
       def post_route(payload)
         with_rescue do
           payload = payload.to_json if payload.is_a?(Hash)
