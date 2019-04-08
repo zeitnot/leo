@@ -58,11 +58,7 @@ module Leo #:nodoc:
       if from_cache?
         Leo.logger.info "Reading '#{source}' files from cache."
       else
-        Util.create_download_dir # Create tmp/ dir  if does not exist.
-        response = RouteClient.get_routes(source)
-        return false unless response # it is nil in case of a connection error
-
-        File.open(zip_name, 'wb') { |file| file.write(response.body) }
+        return DownloadManager.new(self).download
       end
       true
     end

@@ -34,7 +34,7 @@ RSpec.describe Leo::Source do
         it "downloads #{source}.zip" do
 
           zip_data        = File.read(Pathname.new("spec/data/#{source}.zip"), mode: 'rb')
-          mock_response   = double(Faraday::Response, body: zip_data)
+          mock_response   = double(Faraday::Response, body: zip_data, headers: { 'Content-Type' => 'application/zip' })
           allow(Leo::RouteClient).to receive(:get_routes).and_return(mock_response)
 
           source_object = subject.new(source)
@@ -115,7 +115,7 @@ RSpec.describe Leo::Source do
       Leo::SOURCES.each do |source|
         it "returns routes as array for #{source}" do
           zip_data        = File.read(Pathname.new("spec/data/#{source}.zip"), mode: 'rb')
-          mock_response   = double(Faraday::Response, body: zip_data)
+          mock_response   = double(Faraday::Response, body: zip_data, headers: { 'Content-Type' => 'application/zip' })
           allow(Leo::RouteClient).to receive(:get_routes).and_return(mock_response)
 
           source_object = subject.new source

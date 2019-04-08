@@ -52,6 +52,6 @@ RSpec.describe  Leo::PostManager do
     zip_data        = File.read(Pathname.new("spec/data/#{source}.zip"), mode: 'rb')
     stub_request(:get, route_url(source))
         .with(headers: { 'Accept' => '*/*' })
-        .to_return(status: 200, body: zip_data, headers: {})
+        .to_return(status: 200, body: zip_data, headers: { 'Content-Type' => 'application/zip' } )
   end
 end
